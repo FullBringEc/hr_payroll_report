@@ -2,10 +2,13 @@
 <odoo>
 <template id="hr_payroll_report.report_cst_4010_monthly">
     <t t-call="report.html_container">
-			<div class="page" style="font-size: 
-9pt!important;font-family:Helvetica,Verdana,Arial;">
+			<div class="page">
 				<div class="oe_structure"/>
 				<style>
+					.page {
+						font-size: 9pt !important;
+						font-family: "Times New Roman", Arial;
+					}
 					table {
 						border-collapse: collapse;
 					}
@@ -13,17 +16,17 @@
 						border: 1px solid black;
 					}
 					table th, table td{
-						padding: 0.25% !important;
+						padding: .3% !important;
 						border: 1px solid black;
-					}
-					table.main tr {
-						line-height: .9em;
 					}
 					thead th {
 						text-align: center;
 					}
 					.row {
 						margin-top: 20px !important;
+					}
+					table.main tr {
+						line-height: 1.2em
 					}
 					.inline {
 						display: inline-block;
@@ -32,6 +35,7 @@
 						padding: 2px 2px 2px 4px;
 						border: 1px solid black;
 						vertical-align: text-bottom;
+						font-size: 10pt !important;
 					}
 					.nb_line {
 						width: 19%;
@@ -63,6 +67,8 @@
 					table.cadre {border: 1px solid black;}
 					table.cadre td {
 						border: none;
+						padding-top: 3px !important;
+						padding-bottom: 4px !important;
 					}
 					table.cadre td.border-bottom {
 						border-bottom: 1px solid black;
@@ -74,6 +80,15 @@
 						display: inline-block;
 						padding: 2px 10px 2px 4px;
 						border: 1px solid black;
+						width: 95%;
+					}
+					.sm_padding {
+						padding-left: 2px !important;
+						padding-right: 2px !important;
+					}
+					.justify {
+						text-align: justify;
+						text-justify: inter-word;
 					}
 				</style>
 				<t t-set="mdocs" t-value="split_docs_by_month(docs)"/>
@@ -81,40 +96,43 @@
 			        <t t-set="rules" t-value="get_salary_rules('COT_S_CST_')"/>
 					<t t-foreach="sdocs" t-as="sd">
 					<div class="row">
-						<div class="col-xs-2"><h2>DICP</h2></div>
+						<div class="col-xs-2"><img src="/hr_payroll_report/static/src/img/dicp.jpg" style="max-height: 65px; width: auto"/></div>
 						<div class="col-xs-8">
-							<h2 class="text-center" style="margin: 0; font-size: 1.75em">CONTRIBUTION DE SOLIDARITE TERRITORIALE</h2>
+							<h2 class="text-center" style="margin: 0; font-size: 12pt; font-weight: bold">CONTRIBUTION DE SOLIDARITE TERRITORIALE</h2>
 							<p class="text-center" style="margin: 0">(sur les traitements, salaires, pensions, rentes viagères et indemnités diverses)</p>
-							<h4 class="text-center" style="margin: 0; font-size: 1.15em">DECLARATION MENSUELLE OU TRIMESTRIELLE<sup>(1)</sup></h4>
-							<p class="text-center" style="font-size: .7em; margin: 0">(à adresser accompagnée du paiement à la Recette des impôts : ouverture de 7h30 à 14h30 et le vendredi de 7h30 à 13h30 – B.P. 72 – 98713 Papeete – Tél. : 40 46 13 56 – Fax : 40 46 13 03)</p>
+							<h4 class="text-center" style="margin: 0;font-size: 9pt">DECLARATION MENSUELLE OU TRIMESTRIELLE<sup>(1)</sup></h4>
+							<p class="text-center" style="font-size: 6pt; margin: 0">(à adresser accompagnée du paiement à la Recette des impôts : ouverture de 7h30 à 14h30 et le vendredi de 7h30 à 13h30 – B.P. 72 – 98713 Papeete – Tél. : 40 46 13 56 – Fax : 40 46 13 03)</p>
 						</div>
 						<div class="col-xs-2 text-right">
-                                               		<span>DECL.4010</span>
+                                               		<span style="font-size: 7pt">DECL.4010</span>
                                                 </div>
 					</div>
-					<div class="row" style="margin-top: 1em; margin-bottom: 1em">
-						<div class="col-xs-3"><strong>N° TAHITI : </strong><div class="encadre"><span t-esc="docs[0].employee_id.contract_id.department_id.company_id.tahiti or ''"/></div></div>
-						<div class="col-xs-6">Nom, prénom/Raison sociale : <div class="encadre"><span t-esc="docs[0].employee_id.contract_id.department_id.company_id.name or ''"/></div></div>
-						<div class="col-xs-3">Téléphone/Fax : <div class="encadre">40.41.28.15</div></div>
+					<div class="row" style="margin-top: 2px !important; margin-bottom: 2px !important">
+						<div class="col-xs-1 sm_padding"><strong>N° TAHITI : </strong></div>
+						<div class="col-xs-2 sm_padding"><div class="encadre"><span t-esc="docs[0].employee_id.contract_id.department_id.company_id.tahiti or ''"/></div></div>
+						<div class="col-xs-2 sm_padding">Nom, prénom/Raison sociale : </div> 
+						<div class="col-xs-4 sm_padding"><div class="encadre"><span t-esc="docs[0].employee_id.contract_id.department_id.company_id.name or ''"/></div></div>
+						<div class="col-xs-1 sm_padding">Téléphone/Fax :</div> 
+						<div class="col-xs-2 sm_padding"><div class="encadre">40.41.28.15</div></div>
 					</div>
-					<div class="row" style="margin-top: 1em; margin-bottom: 1em">
-						<div class="col-xs-3">Addresse mail de la société ou du représentant légal : </div>
-						<div class="col-xs-3"><div class="encadre">mihiariipearls@hotmail.com</div></div>
-						<div class="col-xs-2">BP /Adresse de correspondance : </div>
-						<div class="col-xs-2"><div class="encadre">BP 21429</div></div>
-						<div class="col-xs-1">Commune : </div>
-						<div class="col-xs-1"><div class="encadre">Papeete</div></div>
+					<div class="row" style="margin-top: 2px !important; margin-bottom: 2px !important">
+						<div class="col-xs-3 sm_padding">Addresse mail de la société ou du représentant légal : </div>
+						<div class="col-xs-3 sm_padding"><div class="encadre">mihiariipearls@hotmail.com</div></div>
+						<div class="col-xs-2 sm_padding">BP /Adresse de correspondance : </div>
+						<div class="col-xs-2 sm_padding"><div class="encadre">BP 21429</div></div>
+						<div class="col-xs-1 sm_padding">Commune : </div>
+						<div class="col-xs-1 sm_padding"><div class="encadre">Papeete</div></div>
 					</div>
-					<div class="row" style="margin-bottom: 5px">
+					<div class="row" style="margin-top: 2px !important; margin-bottom: 2px !important">
 							<table class="main">
 								<tbody>
 										<tr>
-											<td class="rubrique">1- Base de la contribution</td>
+											<td class="rubrique" style="font-weight: bold">1- Base de la contribution</td>
 											<td t-foreach="sd" t-as="o">
-												<div class="inline border_transparent" style="width: 22%; font-size: .9em"><strong>Mois : </strong></div>
-												<div class="inline" style="width: 25%"><span t-esc="get_month(o[0].date_from)"/></div>
-												<div class="inline border_transparent" style="width: 22%;font-size: .9em"><strong>Année : </strong></div>
-												<div class="inline" style="width: 23%"><span t-esc="get_year(o[0].date_from)"/></div>
+												<div class="inline border_transparent" style="width: 18%; font-size: 8pt !important"><strong>Mois : </strong></div>
+												<div class="inline" style="width: 32%"><span t-esc="get_month(o[0].date_from)"/></div>
+												<div class="inline border_transparent" style="width: 22%;font-size: 8pt !important"><strong>Année : </strong></div>
+												<div class="inline" style="width: 20%"><span t-esc="get_year(o[0].date_from)"/></div>
 											</td>
 										</tr>
 										<tr>
@@ -126,11 +144,11 @@
                                                                                         <td t-foreach="sd" t-as="o" class="text-center"><div class="inline" style="width: auto"><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(o, 'BRUT'))))"/></div></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td class="rubrique" style="border-bottom-color: transparent"><span>2- Revenus individuels inférieurs à 150.000 F cfp et donnant lieu à cotisations individuelles inférieures à 750 F cfp (non précomptées)</span></td>
+                                                                                        <td class="rubrique" style="border-bottom-color: transparent; font-weight: bold"><span>2- Revenus individuels inférieurs à 150.000 F cfp et donnant lieu à cotisations individuelles inférieures à 750 F cfp (non précomptées)</span></td>
 											<td t-foreach="sd" t-as="o" class="t-header">
-												 <div class="inline nb_line text-center border_transparent"><span>Nb</span></div>
-                                                                                                 <div class="inline amount_line text-center border_transparent"><span>Montant total des revenus non taxables</span></div>
-                                                                                                 <div class="inline text-center border_transparent"><span>CST due</span></div>
+												 <div class="inline nb_line text-center border_transparent" style="font-size: 7pt !important"><span>Nb <sup>(2)</sup></span></div>
+                                                                                                 <div class="inline amount_line text-center border_transparent" style="font-size: 7pt !important"><span>Montant total des revenus non taxables</span></div>
+                                                                                                 <div class="inline text-center border_transparent" style="font-size: 7pt !important"><span>CST due</span></div>
 											</td>
 										</tr>
 										<tr>
@@ -143,15 +161,27 @@
                                                                                 	</td>
 										</tr>
 										<tr>
-											<td class="rubrique"><span>3 - Calcul de la contribution par tranches des revenus individuels supérieurs ou égaux à 150.000 F cfp</span></td>
+											<td class="rubrique"  style="font-weight: bold"><span>3 - Calcul de la contribution par tranches des revenus individuels supérieurs ou égaux à 150.000 F cfp</span></td>
 											<td t-foreach="sd" t-as="o" class="t-header">
-												 <div class="inline nb_line text-center border_transparent"><span>Nb</span></div>
-                                                                                                 <div class="inline amount_line text-center border_transparent"><span>Montant total des revenus taxables par tranche</span></div>
-                                                                                                 <div class="inline text-center border_transparent"><span>CST due</span></div>
+												 <div class="inline nb_line text-center border_transparent" style="font-size: 7pt !important"><span>Nb <sup>(2)</sup></span></div>
+                                                                                                 <div class="inline amount_line text-center border_transparent" style="font-size: 7pt !important"><span>Montant total des revenus taxables par tranche</span></div>
+                                                                                                 <div class="inline text-center border_transparent" style="font-size: 7pt !important"><span>CST due</span></div>
 											</td>
 										</tr>
 										<tr t-foreach="rules" t-as="r">
-											<td class="rubrique"><span t-esc="r.name"/></td>
+										<t t-set="rule_name" t-value="r.name" />
+										<t t-if="r.code=='COT_S_CST_A'"><t t-set="rule_name" t-value="'3.1-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 0 à 150.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;0,5%'" /></t>
+										<t t-if="r.code=='COT_S_CST_B'"><t t-set="rule_name" t-value="'3.2-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 150.001 à 250.000 F&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;3%'" /></t>
+										<t t-if="r.code=='COT_S_CST_C'"><t t-set="rule_name" t-value="'3.3-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 250.001 à 400.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;5%'" /></t>
+										<t t-if="r.code=='COT_S_CST_D'"><t t-set="rule_name" t-value="'3.4-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 400.001 à 700.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;7%'" /></t>
+										<t t-if="r.code=='COT_S_CST_E'"><t t-set="rule_name" t-value="'3.5-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 700.001 à 1.000.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;9%'" /></t>
+										<t t-if="r.code=='COT_S_CST_F'"><t t-set="rule_name" t-value="'3.6-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 1.000.001 à 1.250.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;12%'" /></t>
+										<t t-if="r.code=='COT_S_CST_G'"><t t-set="rule_name" t-value="'3.7-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 1.250.001 à 1.500.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;15%'" /></t>
+										<t t-if="r.code=='COT_S_CST_H'"><t t-set="rule_name" t-value="'3.8-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 1.500.001 à 1.750.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;18%'" /></t>
+										<t t-if="r.code=='COT_S_CST_I'"><t t-set="rule_name" t-value="'3.9-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;de 1.750.001 à 2.000.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;21%'" /></t>
+										<t t-if="r.code=='COT_S_CST_J'"><t t-set="rule_name" t-value="'3.10-&amp;nbsp;&amp;nbsp;de 2.000.001 à 2.500.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;23%'" /></t>
+										<t t-if="r.code=='COT_S_CST_K'"><t t-set="rule_name" t-value="'3.11-&amp;nbsp;&amp;nbsp;plus de 2.500.000 F cfp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;25%'" /></t>
+											<td class="rubrique justify indent"><span t-raw="rule_name"/></td>
 											<td t-foreach="sd" t-as="o">
 												<t t-set="rule_amount" t-value="get_amount_of_salary_rule(o, r)" />
 												<div class="inline nb_line"><t t-if="rule_amount[0] &gt; 0"><span t-esc="'{0:n}'.format(int(round(rule_amount[0])))"/></t><t t-else="">&amp;nbsp;</t></div>
@@ -160,7 +190,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="rubrique"  style="border-bottom-color: transparent"><span>4- Total de la contribution due</span></td>
+											<td class="rubrique"  style="border-bottom-color: transparent; font-weight: bold"><span>4- Total de la contribution due</span></td>
 											<td t-foreach="sd" t-as="o">
 												<div class="inline ss_total_line text-center border_transparent"><span>Sous total : </span></div>
 												<div class="inline"><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(o, 'COT_S_CST'))))"/></div>
@@ -168,8 +198,8 @@
 										</tr>
 										<tr>
 											<td class="rubrique" style="border-top-color: transparent">&amp;nbsp;</td>
-											<td colspan="2" class="text-center" style="border-right-color: transparent"><strong>TOTAL DU MOIS OU DU TRIMESTRE</strong></td>
-											<td style="border-left-color: transparent">
+											<td colspan="2" class="text-center" style="border-right-color: transparent; border-width: 3px !important;"><strong>TOTAL DU MOIS OU DU TRIMESTRE</strong></td>
+											<td style="border-left-color: transparent; border-width: 3px !important">
 												<div class="inline nb_line text-center border_transparent" style="width: 40%"><span>&amp;nbsp;</span></div>
                                                                                                 <div class="inline" style="width: 40%"><span t-esc="'{0:n}'.format(int(round(get_total_cst_trimester(sd, 'COT_S_CST'))))" /></div> <strong>F cfp</strong>
 											</td>
@@ -177,30 +207,43 @@
 								</tbody>
 							</table>
 					</div>
-					<div class="row" style="margin-top: 0; font-size: .85em">
+					<div class="row" style="margin-top: 4px !important; margin-bottom: 1px !important; font-size: 8pt !important">
 						<div class="col-xs-3">
 							<strong>Moyens de paiement : </strong><br />
-							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1px black; margin-right: 1em">&amp;nbsp;</div><span>En numéraire</span><br />	
-							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1px black; margin-right: 1em">&amp;nbsp;</div><span>Par chèque (à l'ordre du Trésor Public)</span><br />	
-							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1px black; margin-right: 1em">&amp;nbsp;</div><span>Par virement </span><span style="font-size: .8em">(CCP 14168 00001 9062004Y068 32)</span><br />
-							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1px transparent; margin-right: 1em">&amp;nbsp;</div><span>(préciser N°TAHITI, taxe et période concernée)</span>	
+							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1.2px black; margin-right: 1em">&amp;nbsp;</div><span>En numéraire</span><br />	
+							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1.2px black; margin-right: 1em">&amp;nbsp;</div><span>Par chèque (à l'ordre du Trésor Public)</span><br />	
+							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1.2px black; margin-right: 1em">&amp;nbsp;</div><span>Par virement </span><span style="font-size: .8em">(CCP 14168 00001 9062004Y068 32)</span><br />
+							<div style="display: inline-block; width: 1.5em; height: 1.5em; border: solid 1.2px transparent; margin-right: 1em">&amp;nbsp;</div><span>(préciser N°TAHITI, taxe et période concernée)</span><br />
+							<div style="font-size: 5pt !important; margin-top: 5px !important"><sup>(1) </sup>Les entreprises et débiteurs dont les prélèvements globaux effectués sur l'année au titre de la contribution sont égaux ou inférieurs à 240.000 F cfp sont admis à déposer une déclaration par trimestre civil.<br/><sup>(2) </sup>Nombre de personnes concernées par la tranche</div>
+								
 						</div>
 						<div class="col-xs-4">
-							<table class="cadre">
-								<tr><td colspan="3" class="text-center border-bottom">CADRE RESERVE AU SERVICE CHARGE DU RECOUVREMENT<br/>&amp;nbsp;</td></tr>
-								<tr><td>Date de l'encaissement : </td><td class="border-bottom">&amp;nbsp;</td><td>&amp;nbsp;</td></tr>
-								<tr><td>Écriture comptable : </td><td class="border-bottom">&amp;nbsp;</td><td class="text-center border-bottom">N° Déclaration</td></tr>
-								<tr><td>Montant encaissé : </td><td class="border-bottom border-right">&amp;nbsp;</td><td>&amp;nbsp;</td></tr>
-								<tr><td>Pénalités : </td><td class="border-bottom border-right">&amp;nbsp;</td><td>&amp;nbsp;</td></tr>
+							<table class="cadre" style="font-size: 7pt">
+								<tr><td colspan="3" class="text-center border-bottom" style="font-size: 8pt; font-weight: bold">CADRE RESERVE AU SERVICE CHARGE DU RECOUVREMENT<br/>&amp;nbsp;</td></tr>
+								<tr><td style="padding-left: 4px !important; line-height: 1.2em">Date de l'encaissement : </td><td class="border-bottom">&amp;nbsp;</td><td>&amp;nbsp;</td></tr>
+								<tr><td style="padding-left: 4px !important; line-height: 1.2em">Écriture comptable : </td><td class="border-bottom">&amp;nbsp;</td><td class="text-center border-bottom">N° Déclaration</td></tr>
+								<tr><td style="padding-left: 4px !important; line-height: 1.2em">Montant encaissé : </td><td class="border-bottom border-right">&amp;nbsp;</td><td>&amp;nbsp;</td></tr>
+								<tr><td style="padding-left: 4px !important; line-height: 1.2em">Pénalités : </td><td class="border-bottom border-right">&amp;nbsp;</td><td>&amp;nbsp;</td></tr>
 							</table>
 						</div>
 						
 						<div class="col-xs-3">
 							<div>À <div style="display: inline-block; width: 30%; border: 1px solid black; padding-left: 4px">PAPEETE</div> , le <div style="display: inline-block; width: 30%; border: 1px solid black; padding-left: 4px"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/></div></div>
-							<p class="text-center" style="margin-top: 1em"><i>Signature du représentant de l'entreprise</i></p>
+							<p class="text-center" style="margin-top: 1em">Signature du représentant de l'entreprise</p>
 						</div>
-						<div class="col-xs-2 text-center" style="border: 1px solid black; min-height: 100px">
+						<div class="col-xs-2 text-center" style="border: 1px solid black; min-height: 115px">
 							<span style="text-decoration: underline">Date de réception</span>
+						</div>
+					</div>
+					<div class="row" style="margin-top: 1px !important; margin-bottom: 0px !important; font-size: 5pt !important">
+						<div class="col-xs-3">
+							&amp;nbsp;
+						</div>
+						<div class="col-xs-7 text-center">
+							« Les dispositions des articles 39 et 40 de la loi n°78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés, modifiée par la loi n°2004-801 du 6 août 2004, garantissent les droits des personnes physiques à l'égard des traitements des données à caractère personnel. »
+						</div>
+						<div class="col-xs-2 text-right">
+							&amp;nbsp;
 						</div>
 					</div>
 					<p style="page-break-after:always;"/>

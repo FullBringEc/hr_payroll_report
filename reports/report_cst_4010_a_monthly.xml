@@ -3,9 +3,13 @@
 <data>
 <template id="hr_payroll_report.report_cst_4010_a_monthly">
     <t t-call="report.html_container">
-			<div class="page" style="font-size: 9pt!important;font-family:Helvetica,Verdana,Arial;">
+			<div class="page">
 				<div class="oe_structure"/>
 				<style>
+					.page {
+						font-size: 9pt!important;
+						font-family: "Times New Roman", Arial;
+					}
 					h2 {
 						font-size: 1.8em
 					}
@@ -61,6 +65,10 @@
 					tr.cat_row_1 {
 						border-top: 1px solid black;
 					}
+					.row {
+						margin-top: 3px !important;
+						margin-bottom: 3px !important;
+					}
 				</style>
 				<t t-set="sdbmonth" t-value="split_docs_by_month(docs)"/>
 				<t t-foreach="sdbmonth" t-as="mdocs">
@@ -68,13 +76,13 @@
 						<t t-if="o_index == 0"> 
 							<div class="row">
 								<div class="col-xs-2">
-									<h2>DICP</h2>
+									<img src="/hr_payroll_report/static/src/img/dicp.jpg" style="max-height: 65px; width: auto"/>
 								</div>
 								<div class="col-xs-8">
-									<h2 class="text-center">CONTRIBUTION DE SOLIDARITE TERRITORIALE</h2>
-									<h4 class="text-center">SUR LES TRAITEMENTS, SALAIRES, PENSIONS, RENTES VIAGERES ET INDEMNITES DIVERSES</h4>
-									<p class="text-center">Annexe à la déclaration n° 4010 mensuelle ou trimestrielle de l’employeur ou du débiteur de revenus</p>
-                                    <p class="text-center">(article LP. 193-10 du code des impôts)</p>
+									<h2 class="text-center" style="font-size: 12pt !important; font-weight: bold; margin: 1px !important">CONTRIBUTION DE SOLIDARITE TERRITORIALE</h2>
+									<h4 class="text-center" style="font-size: 10pt !important; margin: 1px !important" >SUR LES TRAITEMENTS, SALAIRES, PENSIONS, RENTES VIAGERES ET INDEMNITES DIVERSES</h4>
+									<p class="text-center" style="font-size: 11pt !important; margin: 1px !important">Annexe à la déclaration n° 4010 mensuelle ou trimestrielle de l’employeur ou du débiteur de revenus</p>
+                                    <p class="text-center" style="font-size: 8pt !important; margin: 1px !important">(article LP. 193-10 du code des impôts)</p>
 								</div>
 								<div class="col-xs-2 text-right">
 									<span>DECL.4010-A</span>
@@ -134,8 +142,8 @@
 								<tfoot>
 									<tr>
 										<td class="text-right" t-att-colspan="6"><strong>TOTAL</strong></td>
-										<td><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, 'BRUT'))))"/></td>
-										<td><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, 'COT_S_CST'))))"/></td>
+										<td style="border-width: 3px !important"><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, 'BRUT'))))"/></td>
+										<td style="border-width: 3px !important"><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, 'COT_S_CST'))))"/></td>
 										<td>&amp;nbsp;</td>
 									</tr>
 								</tfoot>
@@ -143,8 +151,11 @@
 							<t t-set="sdocs_i" t-value="sdocs_i + 1"/>
 							</div>
 							<div class="row">
-								<p style="padding-left: 40%">Papeete, le <span /></p>
+								<p style="padding-left: 40%"><i>Papeete, le </i><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/></p>
 								<p style="padding-left: 40%">Signature du représentant légal de l’entreprise ou du débiteur de revenus</p>
+							</div>
+							<div class="row" style="margin-top: 2em !important">
+								<img src="/hr_payroll_report/static/src/img/4010a_footer.jpg" style="max-width: 100%; height: auto"/>
 							</div>
 							<p style="page-break-after:always;"/>
 						</t>

@@ -35,6 +35,10 @@
         'reports/report_cst_4010_monthly.xml',
         'reports/action_hr_payroll_report.xml',
     ],
+    'images': [
+        'static/src/img/dicp.jpg',
+        'static/src/img/4010a_footer.jpg',
+    ],
     'installable': True,
     'application': True,
     'auto_install': False,
