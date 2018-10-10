@@ -1,0 +1,67 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="hr_payroll_report.list">
+      <field name="name">hr_payroll_report list</field>
+      <field name="model">hr_payroll_report.hr_payroll_report</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="hr_payroll_report.action_window">
+      <field name="name">hr_payroll_report window</field>
+      <field name="res_model">hr_payroll_report.hr_payroll_report</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="hr_payroll_report.action_server">
+      <field name="name">hr_payroll_report server</field>
+      <field name="model_id" ref="model_hr_payroll_report_hr_payroll_report"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="hr_payroll_report" id="hr_payroll_report.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="hr_payroll_report.menu_1" parent="hr_payroll_report.menu_root"/>
+    <menuitem name="Menu 2" id="hr_payroll_report.menu_2" parent="hr_payroll_report.menu_root"/>
+    -->
+    <!-- actions -->
+    <menuitem
+        parent="hr_payroll.menu_hr_payroll_root"
+        id="menu_payroll_reports"
+        name="Custom payroll reports"
+        groups="hr_payroll.group_hr_payroll_manager,hr_payroll.group_hr_payroll_user"
+	sequence="20"
+        />
+
+    <menuitem
+        parent="menu_payroll_reports"
+        action="action_payslip_monthly_wizard"
+        id="menu_payslip_monthly_wizard"
+        sequence="1"
+        />
+  </data>
+</odoo>

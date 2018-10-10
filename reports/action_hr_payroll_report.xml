@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report 
+            id="action_report_report_payslip_monthly" 
+            model="hr.payslip" 
+            string="Livre de paie"
+            report_type="qweb-pdf"
+            name="hr_payroll_report.report_payslip_monthly" 
+            file="hr_payroll_report.report_payslip_monthly"
+/>
+<report
+            id="action_report_report_cst_4010"
+            model="hr.payslip"
+            string="CST - 4010"
+            report_type="qweb-pdf"
+            name="hr_payroll_report.report_cst_4010_monthly"
+            file="hr_payroll_report.report_cst_4010_monthly"
+        />
+<report
+            id="action_report_report_cst_4010_a"
+            model="hr.payslip"
+            string="CST - 4010 A"
+            report_type="qweb-pdf"
+            name="hr_payroll_report.report_cst_4010_a_monthly"
+            file="hr_payroll_report.report_cst_4010_a_monthly"
+        />
+
+</odoo>

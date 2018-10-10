@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<odoo>
+<template id="hr_payroll_report.report_payslip_monthly">
+    <t t-call="report.html_container">
+	    <t t-call="report.internal_layout">
+			<div class="page" style="font-size: 
+9pt!important;font-family:Helvetica,Verdana,Arial;">
+				<div class="oe_structure"/>
+				<style>
+					table {
+						border-collapse: 
+collapse
+					}
+					table thead, table tbody {
+						border: 1px solid black;
+					}
+					table th, table td{
+						padding:3px !important;
+					}
+					table td, table th {
+						border-right: 1px solid 
+black;
+						border-left: 1px solid 
+black;
+					}
+					td.rubrique {
+						max-width: 250px;
+						min-width: 250px;
+					}
+					td.total, td.employee {
+						max-width: 125px;
+						min-width: 125px;
+					}
+					thead th {
+						text-align: center;
+					}
+					tbody td.total, tbody 
+td.employee {
+						text-align: right;
+					}
+					table th {
+						text-align: center;
+					}
+					table thead th {
+						background-color: 
+#D3D3D3;
+						border-bottom: solid 1px 
+black;
+					}
+					table thead tr th {
+						font-weight: 700;
+					}
+					.row {
+						margin-top: 20px 
+!important;
+					}
+					tr.cat_row_1 {
+						border-top: 1px solid 
+black;
+					}
+				</style>
+				<t t-set="sdbmonth" 
+t-value="split_docs_by_month(docs)"/>
+				<t t-foreach="sdbmonth" t-as="mdocs">
+					<t t-foreach="mdocs" t-as="o">
+						<t t-if="o_index == 0">
+							<div 
+class="row">
+								<div>
+									<h2 
+class="text-center" style="background-color: #00B7C4; padding: 10px 
+0">Livre de paie</h2>
+									<h4 
+class="text-center">Mois : <span 
+t-esc="get_month_name(o.date_from)"/></h4>
+									<p>
+										<strong>Entreprise : </strong><span t-esc="o.employee_id.contract_id.department_id.company_id.name or '_'"/> - <span t-esc="o.employee_id.contract_id.department_id.company_id.tahiti or '_'"/>
+									</p>
+								</div>
+							</div>
+						</t>
+					</t>
+					<div class="row">
+						<t t-set="rules" 
+t-value="get_salary_rules(mdocs)"/>
+						<t t-set="sdocs_i" 
+t-value="1"/>
+						<t t-set="sdocs" 
+t-value="split_docs_by_number(mdocs, 9)"/>
+						<t t-foreach="sdocs" 
+t-as="sd">
+							<table>
+								<thead>
+									<tr>
+										<th class="rubrique">Rubriques</th>
+										<th t-foreach="sd" t-as="o" class="employee">
+											<span t-esc="o.employee_id.name"/><br/>
+											DN : <span t-esc="o.employee_id.dn_cps"/>
+										</th>
+										<th t-if="sdocs_i == len(sdocs)" class="total">Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<t 
+t-foreach="rules" t-as="r">
+										<tr>
+											<td class="rubrique"><span t-esc="r.name"/></td>
+											<td t-foreach="sd" t-as="o" class="employee"><t t-set="total_rule_employee" t-value="get_total_by_salary_rule_and_employee(o, r)"/><span t-esc="'{0:n}'.format(int(round(total_rule_employee)))"/></td>
+											<td t-if="sdocs_i == len(sdocs)" class="total"><span t-esc="'{0:n}'.format(int(round(get_total_of_salary_rule(mdocs, r))))"/></td>
+										</tr>
+									</t>
+									<t 
+t-set="cat_i" t-value="1"/>
+									<t 
+t-foreach="['BRUT', 'NETAPAYER', 'COT_S_CPS', 'COT_S_CST', 'COT_P_CPS', 
+'HEURE_TRAV', 'TOTAL']" t-as="cat">
+										<tr t-attf-class="cat_row_{{ cat_i }}">
+											<td class="rubrique"><span t-esc="get_rule_category_name(cat)"/></td>
+											<td t-foreach="sd" t-as="o" class="employee"><span t-esc="'{0:n}'.format(int(round(get_total_by_rule_category(o, cat))))"/></td>
+											<td t-if="sdocs_i == len(sdocs)" class="total"><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, cat))))"/></td>
+										</tr>
+										<t t-set="cat_i" t-value="cat_i + 1"/>
+									</t>
+									<tr>
+										<td class="rubrique">Congés acquis</td>
+										<td t-foreach="sd" t-as="o" class="employee"><span t-esc="'{0:.1f}'.format(get_conge_acquis(o)).replace('.',',')"/></td>
+										<td t-if="sdocs_i == len(sdocs)" class="total"><span t-esc="'{0:.1f}'.format(get_total_conge_acquis(mdocs)).replace('.',',')"/></td>
+									</tr>
+									<tr>
+										<td class="rubrique">Congés pris</td>
+										<td t-foreach="sd" t-as="o" class="employee"><span t-esc="'{0:.1f}'.format(get_worked_days_from_payslip(o, 'CONGE')).replace('.',',')"/></td>
+										<td t-if="sdocs_i == len(sdocs)" class="total"><span t-esc="'{0:.1f}'.format(get_total_worked_days_from_payslip(mdocs, 'CONGE')).replace('.',',')"/></td>
+									</tr>
+									<tr>
+										<td>Nombre d'employés</td>
+										<td t-foreach="sd" t-as="o" class="employee">&amp;nbsp;</td>
+										<td t-if="sdocs_i == len(sdocs)" class="total"><span t-esc="len(mdocs)"/></td>
+									</tr>
+								</tbody>
+							</table>
+							<t 
+t-set="sdocs_i" t-value="sdocs_i + 1"/>
+							<p 
+style="page-break-after:always;"/>
+						</t>
+					</div>
+				<p style="page-break-after:auto;"/>
+				</t>
+			</div>
+		</t>
+	</t> 
+</template>
+</odoo>

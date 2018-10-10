@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<odoo>
+<data>
+<template id="hr_payroll_report.report_cst_4010_a_monthly">
+    <t t-call="report.html_container">
+			<div class="page" style="font-size: 9pt!important;font-family:Helvetica,Verdana,Arial;">
+				<div class="oe_structure"/>
+				<style>
+					h2 {
+						font-size: 1.8em
+					}
+					h4 {
+						font-size: 1.2em
+					}
+					table {
+						border-collapse: collapse
+					}
+					td, th {
+						border: 1px solid black;
+						max-width: 10%;
+						min-width: 10%;
+						width: 10%;
+					}
+					table th, table td{
+						padding:3px !important;
+					}
+					table td, table th {
+						border-right: 1px solid black;
+						border-left: 1px solid black;
+					}
+					td.rubrique {
+						max-width: 250px;
+						min-width: 250px;
+					}
+					td.total, td.employee {
+						max-width: 125px;
+						min-width: 125px;
+					}
+					thead th {
+						text-align: center;
+					}
+					tbody td.total, tbody td.employee {
+						text-align: right;
+					}
+					table th {
+						text-align: center;
+					}
+					table thead th {
+						border-bottom: solid 1px black;
+					}
+					table tfoot td {
+						border-top: solid 1px black;
+						height: 1.1em
+					}
+					table thead tr th {
+						font-weight: 700;
+					}
+					.row {
+						margin-top: 20px !important;
+					}
+					tr.cat_row_1 {
+						border-top: 1px solid black;
+					}
+				</style>
+				<t t-set="sdbmonth" t-value="split_docs_by_month(docs)"/>
+				<t t-foreach="sdbmonth" t-as="mdocs">
+					<t t-foreach="mdocs" t-as="o">
+						<t t-if="o_index == 0"> 
+							<div class="row">
+								<div class="col-xs-2">
+									<h2>DICP</h2>
+								</div>
+								<div class="col-xs-8">
+									<h2 class="text-center">CONTRIBUTION DE SOLIDARITE TERRITORIALE</h2>
+									<h4 class="text-center">SUR LES TRAITEMENTS, SALAIRES, PENSIONS, RENTES VIAGERES ET INDEMNITES DIVERSES</h4>
+									<p class="text-center">Annexe à la déclaration n° 4010 mensuelle ou trimestrielle de l’employeur ou du débiteur de revenus</p>
+                                    <p class="text-center">(article LP. 193-10 du code des impôts)</p>
+								</div>
+								<div class="col-xs-2 text-right">
+									<span>DECL.4010-A</span>
+								</div>
+							</div>
+							<div class="row">
+                                <div class="col-xs-8">
+									<p>N° TAHITI : <span t-esc="o.employee_id.contract_id.department_id.company_id.tahiti or '_'"/></p>
+									<p>NOM ET PRENOMS OU RAISON SOCIALE : <span t-esc="o.employee_id.contract_id.department_id.company_id.name or ''"/></p>
+								</div>
+								<div class="col-xs-4">
+									<p><strong>PERIODE DECLAREE: </strong>MOIS: <span t-esc="get_month(o.date_from)"/></p>
+									<p>ANNEE : <span t-esc="get_year(o.date_from)"/></p>
+								</div>
+							</div>
+						</t>
+					</t>
+						<t t-set="rules" t-value="get_salary_rules(mdocs)"/>
+						<t t-set="sdocs_i" t-value="1"/>
+						<t t-set="sdocs" t-value="split_docs_by_number(mdocs, 20)"/>
+						<t t-foreach="sdocs" t-as="sd">
+						<div class="row">
+							<table>
+								<thead>
+									<tr>
+										<th class="rubrique" t-att-colspan="4">Identification des personnes bénéficiaires des revenus soumis à la CST-S<sup>1</sup></th>
+                                                                                <th style="border-bottom: none">&amp;nbsp;</th>
+                                                                                <th style="border-bottom: none">&amp;nbsp;</th>
+                                                                                <th style="border-bottom: none">&amp;nbsp;</th>
+                                                                                <th style="border-bottom: none">&amp;nbsp;</th>
+                                                                                <th style="border-bottom: none">&amp;nbsp;</th>
+									</tr>
+									<tr>
+										<th>Nom patronymique</th>
+										<th>Nom marital</th>
+										<th>Prénoms</th>
+										<th>Date et lieu de naissance</th>
+                                                                                <th style="border-top: none">Fonction <sup>2</sup></th>
+                                                                                <th style="border-top: none">Nature des revenus <sup>3</sup></th>
+                                                                                <th style="border-top: none">Montant brut des revenus versés au titre du mois concerné</th>
+                                                                                <th style="border-top: none">CST due au titre du mois concerné</th>
+                                                                                <th style="border-top: none">Date de sortie du régime CST</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr t-foreach="sd" t-as="o" class="employee">
+										<td t-att-colspan="3"><span t-esc="o.employee_id.name"/></td>
+										<td><span t-esc="format_date(o.employee_id.birthday, '%d/%m/%Y')" /></td>										
+										<td>3</td>
+										<td>3</td>
+										<td class="rubrique"><span t-esc="'{0:n}'.format(int(round(get_total_by_rule_category(o, 'BRUT'))))"/></td>
+										<td class="rubrique"><span t-esc="'{0:n}'.format(int(round(get_total_by_rule_category(o, 'COT_S_CST'))))"/></td>
+										<td>&amp;nbsp;</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td class="text-right" t-att-colspan="6"><strong>TOTAL</strong></td>
+										<td><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, 'BRUT'))))"/></td>
+										<td><span t-esc="'{0:n}'.format(int(round(get_total_of_rule_category(mdocs, 'COT_S_CST'))))"/></td>
+										<td>&amp;nbsp;</td>
+									</tr>
+								</tfoot>
+							</table>
+							<t t-set="sdocs_i" t-value="sdocs_i + 1"/>
+							</div>
+							<div class="row">
+								<p style="padding-left: 40%">Papeete, le <span /></p>
+								<p style="padding-left: 40%">Signature du représentant légal de l’entreprise ou du débiteur de revenus</p>
+							</div>
+							<p style="page-break-after:always;"/>
+						</t>
+				<p style="page-break-after:auto;"/>
+				</t>
+			</div>
+	</t>
+</template>
+</data>
+</odoo>
+
