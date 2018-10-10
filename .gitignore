@@ -1,7 +1,2 @@
 archive/
-./reports/cst_report_4010_A.pyc
-./reports/cst_report_4010.pyc
-./reports/cst_report_4010_a.pyc
-./reports/__init__.pyc
-./reports/cst_report_by_month.pyc
-./reports/payslip_monthly.pyc
+reports/*.pyc
